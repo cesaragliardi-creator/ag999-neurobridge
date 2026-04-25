@@ -1,0 +1,1042 @@
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Share Tech Mono',monospace,sans-serif;}
+#app{display:flex;height:600px;background:#030d07;color:#e0fff0;border-radius:12px;overflow:hidden;border:1px solid rgba(0,255,136,0.2);}
+.sb{width:60px;background:#010a04;border-right:1px solid rgba(0,255,136,0.15);display:flex;flex-direction:column;align-items:center;padding:12px 0;gap:4px;flex-shrink:0;}
+.logo{width:36px;height:36px;border:1px solid #00ff88;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:8px;color:#00ff88;margin-bottom:12px;cursor:pointer;text-align:center;line-height:1.2;}
+.nb{width:38px;height:38px;border-radius:8px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:rgba(180,255,220,0.4);font-size:15px;transition:all .15s;border:1px solid transparent;background:transparent;position:relative;}
+.nb:hover{background:rgba(0,255,136,0.08);color:#00ff88;border-color:rgba(0,255,136,0.2);}
+.nb.act{background:rgba(0,255,136,0.12);color:#00ff88;border-color:rgba(0,255,136,0.3);}
+.nb.act::before{content:'';position:absolute;left:-7px;top:50%;transform:translateY(-50%);width:2px;height:18px;background:#00ff88;border-radius:1px;}
+.sb-bot{margin-top:auto;display:flex;flex-direction:column;align-items:center;gap:4px;}
+.main{flex:1;display:flex;flex-direction:column;overflow:hidden;}
+.hdr{display:flex;align-items:center;padding:10px 16px;border-bottom:1px solid rgba(0,255,136,0.12);background:#020b05;gap:12px;flex-shrink:0;}
+.hdr-ttl h2{font-size:.95rem;font-weight:600;color:#e0fff0;}
+.hdr-ttl p{font-size:.6rem;color:rgba(180,255,220,0.45);margin-top:1px;}
+.sdot{width:6px;height:6px;border-radius:50%;background:#00ff88;display:inline-block;margin-right:4px;animation:pd 1.5s infinite;}
+@keyframes pd{0%,100%{opacity:1}50%{opacity:.3}}
+.sci-pill{background:rgba(0,255,136,0.08);border:1px solid rgba(0,255,136,0.18);border-radius:5px;padding:2px 8px;font-size:.58rem;color:#00ff88;letter-spacing:.5px;}
+.hdr-right{margin-left:auto;display:flex;gap:6px;}
+.hbtn{width:30px;height:30px;background:rgba(0,255,136,0.06);border:1px solid rgba(0,255,136,0.15);border-radius:7px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:13px;color:rgba(180,255,220,0.5);transition:all .15s;}
+.hbtn:hover{color:#00ff88;border-color:rgba(0,255,136,0.3);}
+.tabs{display:flex;border-bottom:1px solid rgba(0,255,136,0.12);background:#020b05;flex-shrink:0;padding:0 16px;}
+.tab{padding:7px 14px;font-size:.65rem;cursor:pointer;color:rgba(180,255,220,0.4);border-bottom:2px solid transparent;transition:all .15s;letter-spacing:.5px;}
+.tab:hover{color:#e0fff0;}
+.tab.act{color:#00ff88;border-bottom-color:#00ff88;}
+.body{display:flex;flex:1;overflow:hidden;}
+.cnt{flex:1;overflow-y:auto;padding:12px;display:flex;flex-direction:column;gap:10px;}
+.cnt::-webkit-scrollbar{width:3px;}
+.cnt::-webkit-scrollbar-thumb{background:rgba(0,255,136,0.2);border-radius:2px;}
+.pg{display:none;flex-direction:column;gap:10px;}
+.pg.act{display:flex;}
+.banner{background:rgba(0,255,136,0.04);border:1px solid rgba(0,255,136,0.18);border-radius:10px;padding:11px 14px;}
+.banner h3{font-size:.72rem;color:#00ff88;letter-spacing:.8px;margin-bottom:3px;}
+.banner p{font-size:.65rem;color:rgba(180,255,220,0.5);line-height:1.5;}
+.btags{display:flex;gap:5px;margin-top:6px;flex-wrap:wrap;}
+.btag{background:rgba(0,255,136,0.07);border:1px solid rgba(0,255,136,0.18);border-radius:4px;padding:1px 7px;font-size:.55rem;color:#00ff88;}
+.btag.c{background:rgba(0,238,255,0.07);border-color:rgba(0,238,255,0.2);color:#00eeff;}
+.btag.y{background:rgba(255,204,0,0.07);border-color:rgba(255,204,0,0.2);color:#ffcc00;}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;}
+.card{background:rgba(0,255,136,0.03);border:1px solid rgba(0,255,136,0.14);border-radius:10px;padding:11px;cursor:pointer;transition:all .15s;}
+.card:hover{border-color:rgba(0,255,136,0.35);}
+.clbl{font-size:.58rem;color:rgba(180,255,220,0.4);letter-spacing:.8px;text-transform:uppercase;margin-bottom:4px;}
+.ctyp{font-size:.75rem;font-weight:600;margin-bottom:3px;}
+.cval{font-size:1.3rem;font-weight:700;color:#00ff88;}
+.csub{font-size:.58rem;color:rgba(180,255,220,0.4);margin-top:4px;}
+.bdg{display:inline-block;padding:1px 7px;border-radius:4px;font-size:.55rem;margin-top:6px;}
+.bg{background:rgba(0,255,136,0.1);color:#00ff88;border:1px solid rgba(0,255,136,0.22);}
+.by{background:rgba(255,204,0,0.1);color:#ffcc00;border:1px solid rgba(255,204,0,0.22);}
+.br{background:rgba(255,68,102,0.1);color:#ff4466;border:1px solid rgba(255,68,102,0.22);}
+.row2{display:grid;grid-template-columns:1fr 1.4fr;gap:8px;}
+.row3{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+.gp{background:rgba(0,255,136,0.03);border:1px solid rgba(0,255,136,0.13);border-radius:10px;padding:12px;}
+.ph{display:flex;align-items:center;justify-content:space-between;margin-bottom:9px;}
+.pt{font-size:.72rem;font-weight:600;letter-spacing:.3px;}
+.see{font-size:.6rem;color:#00ff88;cursor:pointer;}
+.elist{display:flex;flex-direction:column;gap:6px;}
+.ei{display:flex;align-items:center;gap:8px;padding:6px 8px;background:rgba(0,255,136,0.05);border-radius:7px;border:1px solid transparent;cursor:pointer;transition:all .15s;}
+.ei:hover{border-color:rgba(0,255,136,0.2);}
+.eico{width:26px;height:26px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:11px;flex-shrink:0;}
+.eg{background:rgba(0,255,136,0.1);}
+.ec{background:rgba(0,238,255,0.1);}
+.ey{background:rgba(255,204,0,0.1);}
+.er{background:rgba(255,68,102,0.1);}
+.en{font-size:.7rem;font-weight:600;}
+.et{font-size:.58rem;color:rgba(180,255,220,0.4);}
+.ev{font-size:.7rem;color:#00ff88;}
+.mgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;}
+.mi{background:rgba(0,255,136,0.05);border:1px solid rgba(0,255,136,0.13);border-radius:8px;padding:8px 4px;text-align:center;cursor:pointer;transition:all .15s;}
+.mi:hover{border-color:#00ff88;}
+.mico{font-size:16px;margin-bottom:2px;}
+.mlbl{font-size:.55rem;color:rgba(180,255,220,0.4);}
+.rbar{display:flex;flex-direction:column;gap:7px;}
+.ri{display:flex;align-items:center;gap:8px;}
+.rn{font-size:.6rem;color:rgba(180,255,220,0.4);width:80px;}
+.rt{flex:1;height:4px;background:rgba(255,255,255,0.04);border-radius:2px;overflow:hidden;}
+.rf{height:100%;border-radius:2px;}
+.rv{font-size:.6rem;width:32px;text-align:right;}
+.rpanel{width:190px;background:#010a04;border-left:1px solid rgba(0,255,136,0.12);padding:12px;overflow-y:auto;display:flex;flex-direction:column;gap:12px;flex-shrink:0;}
+.rpanel::-webkit-scrollbar{width:2px;}
+.rpt{font-size:.68rem;font-weight:600;margin-bottom:6px;letter-spacing:.3px;}
+.rrow{display:flex;align-items:center;justify-content:space-between;padding:4px 0;border-bottom:1px solid rgba(0,255,136,0.05);font-size:.63rem;}
+.rl{color:rgba(180,255,220,0.4);}
+.rv2{color:#00ff88;font-weight:600;}
+.goal{display:flex;align-items:center;justify-content:space-between;font-size:.63rem;padding:4px 0;border-bottom:1px solid rgba(0,255,136,0.05);}
+.gn{color:rgba(180,255,220,0.4);}
+.gv{color:#00ff88;}
+.ga{color:#00ff88;cursor:pointer;}
+.hyp{background:rgba(0,255,136,0.04);border:1px solid rgba(0,255,136,0.13);border-radius:8px;padding:10px;cursor:pointer;transition:all .15s;margin-bottom:6px;}
+.hyp:hover{border-color:rgba(0,255,136,0.3);}
+.hh{display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;}
+.hid{font-size:.6rem;color:#00ff88;}
+.hst{font-size:.55rem;padding:1px 6px;border-radius:3px;}
+.hsa{background:rgba(0,255,136,0.1);color:#00ff88;border:1px solid rgba(0,255,136,0.2);}
+.hsp{background:rgba(255,204,0,0.1);color:#ffcc00;border:1px solid rgba(255,204,0,0.2);}
+.htxt{font-size:.65rem;color:#e0fff0;line-height:1.4;}
+.hmt{font-size:.58rem;color:rgba(180,255,220,0.4);margin-top:3px;}
+.sgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:7px;}
+.si{background:rgba(0,255,136,0.04);border:1px solid rgba(0,255,136,0.13);border-radius:8px;padding:10px;cursor:pointer;transition:all .15s;}
+.si:hover{border-color:#00ff88;}
+.stit{font-size:.7rem;font-weight:600;margin-bottom:3px;}
+.sdsc{font-size:.6rem;color:rgba(180,255,220,0.4);line-height:1.35;}
+.sbd{font-size:.55rem;padding:1px 7px;border-radius:3px;margin-top:6px;display:inline-block;cursor:pointer;}
+.srun{background:rgba(0,255,136,0.1);color:#00ff88;border:1px solid rgba(0,255,136,0.2);}
+.spro{background:rgba(0,238,255,0.1);color:#00eeff;border:1px solid rgba(0,238,255,0.2);}
+.ukgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;}
+.un{background:rgba(0,255,136,0.04);border:1px solid rgba(0,255,136,0.13);border-radius:8px;padding:10px;cursor:pointer;transition:all .15s;text-align:center;}
+.un:hover{border-color:#00ff88;}
+.un.on{border-color:rgba(0,255,136,0.28);}
+.un.wn{border-color:rgba(255,204,0,0.28);}
+.unn{font-size:.72rem;font-weight:600;margin-bottom:2px;}
+.unl{font-size:.58rem;color:rgba(180,255,220,0.4);}
+.unv{font-size:.75rem;color:#00ff88;margin-top:2px;}
+.unst{font-size:.55rem;padding:1px 6px;border-radius:3px;margin-top:4px;display:inline-block;}
+.uson{background:rgba(0,255,136,0.1);color:#00ff88;border:1px solid rgba(0,255,136,0.2);}
+.usw{background:rgba(255,204,0,0.1);color:#ffcc00;border:1px solid rgba(255,204,0,0.2);}
+.usof{background:rgba(100,100,100,0.1);color:rgba(180,255,220,0.4);border:1px solid rgba(100,100,100,0.2);}
+.cgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;}
+.cr{background:rgba(0,255,136,0.04);border:1px solid rgba(0,255,136,0.13);border-radius:8px;padding:11px;cursor:pointer;transition:all .15s;}
+.cr:hover{border-color:rgba(0,255,136,0.3);}
+.cico{font-size:18px;margin-bottom:5px;}
+.ctit{font-size:.72rem;font-weight:600;margin-bottom:2px;}
+.cdsc{font-size:.6rem;color:rgba(180,255,220,0.4);line-height:1.35;}
+.srow{display:flex;align-items:center;gap:6px;margin-top:5px;}
+.sstars{color:#00ff88;font-size:.65rem;}
+.spct{font-size:.6rem;color:#00eeff;}
+.pb{height:3px;background:rgba(255,255,255,0.04);border-radius:2px;overflow:hidden;margin-top:4px;}
+.pf{height:100%;border-radius:2px;background:linear-gradient(90deg,#00cc66,#00ff88);}
+.live-chip{font-size:.55rem;background:rgba(0,255,136,0.1);padding:2px 7px;border-radius:4px;color:#00ff88;border:1px solid rgba(0,255,136,0.2);}
+canvas{width:100%!important;}
+/* IP PROTECTION */
+.ip-banner{background:rgba(201,162,39,.07);border-bottom:1px solid rgba(201,162,39,.22);padding:5px 16px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;font-family:'Share Tech Mono',monospace;font-size:.58rem;color:rgba(201,162,39,.85);letter-spacing:.4px;}
+.ip-chips{display:flex;gap:5px;}
+.ip-chip{border:1px solid rgba(201,162,39,.35);padding:1px 8px;font-size:.52rem;letter-spacing:.8px;color:rgba(201,162,39,.7);border-radius:3px;}
+.blur-val{display:inline-block;filter:blur(4px);background:rgba(201,162,39,.07);padding:0 3px;user-select:none;cursor:not-allowed;border-radius:2px;}
+.blur-val:hover{filter:blur(6px);}
+.prop-tag{background:rgba(201,162,39,.08);border:1px solid rgba(201,162,39,.25);border-radius:4px;padding:1px 8px;font-size:.55rem;color:rgba(201,162,39,.8);letter-spacing:.5px;}
+.ip-block{background:rgba(201,162,39,.04);border:1px solid rgba(201,162,39,.18);border-radius:8px;padding:11px 14px;margin-top:4px;}
+.ip-block-title{font-size:.68rem;color:rgba(201,162,39,.85);letter-spacing:.6px;margin-bottom:6px;display:flex;align-items:center;gap:8px;}
+.ip-formula{font-size:.7rem;color:#e0fff0;margin:4px 0;line-height:1.7;}
+.ip-desc{font-size:.6rem;color:rgba(180,255,220,0.45);line-height:1.5;margin-bottom:6px;}
+.ip-footer{font-size:.58rem;color:rgba(201,162,39,.6);margin-top:8px;line-height:1.7;border-top:1px solid rgba(201,162,39,.12);padding-top:8px;}
+
+
+/* ── DATA ENTRY STYLES ── */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:100;display:none;align-items:center;justify-content:center;}
+.modal-overlay.open{display:flex;}
+.modal{background:#020e06;border:1px solid rgba(0,255,136,0.3);border-radius:12px;width:440px;max-height:80vh;overflow-y:auto;padding:20px;position:relative;}
+.modal::-webkit-scrollbar{width:3px;}
+.modal::-webkit-scrollbar-thumb{background:rgba(0,255,136,0.2);}
+.modal-title{font-size:.85rem;color:#00ff88;letter-spacing:.8px;margin-bottom:16px;border-bottom:1px solid rgba(0,255,136,0.15);padding-bottom:8px;display:flex;justify-content:space-between;align-items:center;}
+.modal-close{cursor:pointer;color:rgba(180,255,220,0.4);font-size:1.1rem;transition:color .15s;}
+.modal-close:hover{color:#ff4466;}
+.field-group{margin-bottom:14px;}
+.field-label{font-size:.6rem;color:rgba(180,255,220,0.5);letter-spacing:.6px;margin-bottom:4px;text-transform:uppercase;}
+.field-input{width:100%;background:rgba(0,255,136,0.04);border:1px solid rgba(0,255,136,0.18);border-radius:6px;padding:6px 10px;color:#e0fff0;font-family:'Share Tech Mono',monospace;font-size:.72rem;outline:none;transition:border-color .15s;}
+.field-input:focus{border-color:rgba(0,255,136,0.5);}
+.field-input::placeholder{color:rgba(180,255,220,0.25);}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+.btn-save{width:100%;padding:8px;background:rgba(0,255,136,0.1);border:1px solid rgba(0,255,136,0.3);border-radius:7px;color:#00ff88;font-family:'Share Tech Mono',monospace;font-size:.72rem;cursor:pointer;letter-spacing:.5px;transition:all .15s;margin-top:4px;}
+.btn-save:hover{background:rgba(0,255,136,0.18);}
+.btn-data{background:rgba(0,255,136,0.06);border:1px solid rgba(0,255,136,0.2);border-radius:6px;padding:2px 9px;font-size:.58rem;color:#00ff88;cursor:pointer;transition:all .15s;font-family:'Share Tech Mono',monospace;}
+.btn-data:hover{background:rgba(0,255,136,0.14);}
+.saved-flash{position:fixed;bottom:20px;right:20px;background:#020e06;border:1px solid #00ff88;border-radius:8px;padding:8px 16px;font-size:.65rem;color:#00ff88;z-index:200;opacity:0;transition:opacity .3s;pointer-events:none;}
+.saved-flash.show{opacity:1;}
+.rrow-edit{cursor:pointer;}
+.rrow-edit:hover .rv2{color:#00eeff;}
+.section-divider{font-size:.6rem;color:rgba(0,255,136,0.4);letter-spacing:.5px;text-transform:uppercase;margin:4px 0 2px;border-top:1px solid rgba(0,255,136,0.08);padding-top:6px;}
+
+/* ── UNM MODULE STYLES ── */
+.unm-arch{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px;}
+.unm-layer{background:rgba(0,255,136,0.03);border:1px solid rgba(0,255,136,0.14);border-radius:10px;padding:12px;position:relative;}
+.unm-layer.layer-new{border-color:rgba(0,238,255,0.3);background:rgba(0,238,255,0.04);}
+.unm-layer.layer-core{border-color:rgba(255,204,0,0.25);background:rgba(255,204,0,0.03);}
+.unm-layer-badge{font-size:.52rem;letter-spacing:.8px;padding:1px 7px;border-radius:3px;display:inline-block;margin-bottom:5px;}
+.badge-sense{background:rgba(0,255,136,0.1);color:#00ff88;border:1px solid rgba(0,255,136,0.25);}
+.badge-core{background:rgba(255,204,0,0.1);color:#ffcc00;border:1px solid rgba(255,204,0,0.25);}
+.badge-action{background:rgba(0,238,255,0.1);color:#00eeff;border:1px solid rgba(0,238,255,0.25);}
+.badge-loop{background:rgba(255,68,102,0.1);color:#ff4466;border:1px solid rgba(255,68,102,0.25);}
+.unm-layer-title{font-size:.72rem;font-weight:600;margin-bottom:5px;}
+.unm-layer-items{list-style:none;display:flex;flex-direction:column;gap:3px;}
+.unm-layer-items li{font-size:.6rem;color:rgba(180,255,220,0.55);padding-left:10px;position:relative;line-height:1.4;}
+.unm-layer-items li::before{content:'→';position:absolute;left:0;color:rgba(0,255,136,0.4);}
+.unm-layer.layer-new .unm-layer-items li::before{color:rgba(0,238,255,0.5);}
+.unm-controls{background:rgba(0,255,136,0.03);border:1px solid rgba(0,255,136,0.14);border-radius:10px;padding:12px;margin-bottom:10px;}
+.unm-sliders{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:8px;}
+.unm-sl{display:flex;flex-direction:column;gap:4px;}
+.unm-sl-label{font-size:.58rem;color:rgba(180,255,220,0.45);display:flex;justify-content:space-between;}
+.unm-sl-val{color:#00eeff;font-weight:600;}
+.unm-sl input[type=range]{width:100%;accent-color:#00eeff;}
+.loop-flow{background:rgba(0,255,136,0.03);border:1px solid rgba(0,255,136,0.14);border-radius:10px;padding:12px;margin-bottom:10px;}
+.loop-steps-row{display:flex;align-items:center;gap:0;margin-top:8px;flex-wrap:wrap;}
+.loop-node{font-size:.6rem;padding:5px 10px;border-radius:5px;border:1px solid rgba(0,255,136,0.2);background:rgba(0,255,136,0.05);color:rgba(180,255,220,0.5);transition:all .3s;white-space:nowrap;}
+.loop-node.ls-act{border-color:#00ff88;background:rgba(0,255,136,0.12);color:#00ff88;}
+.loop-node.ls-act-c{border-color:#00eeff;background:rgba(0,238,255,0.1);color:#00eeff;}
+.loop-node.ls-act-y{border-color:#ffcc00;background:rgba(255,204,0,0.08);color:#ffcc00;}
+.loop-node.ls-act-r{border-color:#ff4466;background:rgba(255,68,102,0.08);color:#ff4466;}
+.loop-arr{font-size:.7rem;color:rgba(0,255,136,0.3);padding:0 3px;}
+.unm-alert{display:flex;align-items:center;gap:8px;padding:6px 10px;border-radius:7px;font-size:.63rem;margin-top:4px;}
+.unm-alert-ok{background:rgba(0,255,136,0.07);border:1px solid rgba(0,255,136,0.2);color:#00ff88;}
+.unm-alert-warn{background:rgba(255,204,0,0.07);border:1px solid rgba(255,204,0,0.2);color:#ffcc00;}
+.unm-alert-blue{background:rgba(0,238,255,0.07);border:1px solid rgba(0,238,255,0.2);color:#00eeff;}
+.unm-emergency{width:100%;padding:7px;background:rgba(255,68,102,0.08);border:1px solid rgba(255,68,102,0.3);border-radius:7px;color:#ff4466;font-family:'Share Tech Mono',monospace;font-size:.65rem;cursor:pointer;letter-spacing:.5px;margin-top:6px;transition:all .15s;}
+.unm-emergency:hover{background:rgba(255,68,102,0.16);}
+.unm-metric{background:rgba(0,255,136,0.04);border:1px solid rgba(0,255,136,0.13);border-radius:8px;padding:9px 11px;}
+.unm-metric-lbl{font-size:.55rem;color:rgba(180,255,220,0.4);margin-bottom:3px;}
+.unm-metric-val{font-size:1.1rem;font-weight:700;color:#00eeff;}
+.unm-metric-unit{font-size:.55rem;color:rgba(180,255,220,0.35);font-weight:400;}
+.unm-metrics-row{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:10px;}
+</style>
+
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js">
+// SHOW IP PANEL
+function showIP(){
+  go('aria');
+  const p = document.getElementById('ip-panel');
+  if(p){ p.style.display='block'; p.scrollIntoView({behavior:'smooth',block:'start'}); }
+}
+</script>
+
+<!-- MODAL DE ENTRADA DE DADOS -->
+<div class="modal-overlay" id="dataModal">
+  <div class="modal">
+    <div class="modal-title">
+      <span>✦ AG-999 · DATA ENTRY</span>
+      <span class="modal-close" onclick="closeModal()">✕</span>
+    </div>
+
+    <div class="section-divider">AG-999 Parameters</div>
+    <div class="field-row">
+      <div class="field-group">
+        <div class="field-label">m_gap (GeV)</div>
+        <input class="field-input" id="inp_mgap" placeholder="0.522">
+      </div>
+      <div class="field-group">
+        <div class="field-label">M* (GeV)</div>
+        <input class="field-input" id="inp_mstar" placeholder="10¹⁶">
+      </div>
+    </div>
+    <div class="field-row">
+      <div class="field-group">
+        <div class="field-label">λ (lambda)</div>
+        <input class="field-input" id="inp_lambda" placeholder="13.4">
+      </div>
+      <div class="field-group">
+        <div class="field-label">σ-window (months)</div>
+        <input class="field-input" id="inp_sigma" placeholder="24">
+      </div>
+    </div>
+    <div class="field-group">
+      <div class="field-label">φ-window (months)</div>
+      <input class="field-input" id="inp_phi" placeholder="6">
+    </div>
+
+    <div class="section-divider">Neural Biomarkers</div>
+    <div class="field-row">
+      <div class="field-group">
+        <div class="field-label">HbO Peak (mM)</div>
+        <input class="field-input" id="inp_hbo" placeholder="+0.84">
+      </div>
+      <div class="field-group">
+        <div class="field-label">HbR (mM)</div>
+        <input class="field-input" id="inp_hbr" placeholder="-0.21">
+      </div>
+    </div>
+    <div class="field-row">
+      <div class="field-group">
+        <div class="field-label">MEG Peak (fT)</div>
+        <input class="field-input" id="inp_meg" placeholder="312">
+      </div>
+      <div class="field-group">
+        <div class="field-label">EEG SNR (dB)</div>
+        <input class="field-input" id="inp_snr" placeholder="18.4">
+      </div>
+    </div>
+
+    <div class="section-divider">Signal Dashboard Cards</div>
+    <div class="field-row">
+      <div class="field-group">
+        <div class="field-label">EEG Anomaly Index</div>
+        <input class="field-input" id="inp_v1" placeholder="0.72">
+      </div>
+      <div class="field-group">
+        <div class="field-label">fNIRS HbO Stress</div>
+        <input class="field-input" id="inp_v2" placeholder="+0.84">
+      </div>
+    </div>
+    <div class="field-group">
+      <div class="field-label">MEG Cascade Prob.</div>
+      <input class="field-input" id="inp_v3" placeholder="1.10">
+    </div>
+
+    <div class="section-divider">ARIA Milestones</div>
+    <div class="field-group">
+      <div class="field-label">Milestone 1 — Name</div>
+      <input class="field-input" id="inp_m1n" placeholder="EEG Validation">
+    </div>
+    <div class="field-row">
+      <div class="field-group">
+        <div class="field-label">Phase</div>
+        <input class="field-input" id="inp_m1p" placeholder="Ph.1">
+      </div>
+    </div>
+    <div class="field-group">
+      <div class="field-label">Milestone 2 — Name</div>
+      <input class="field-input" id="inp_m2n" placeholder="fNIRS Integration">
+    </div>
+    <div class="field-group">
+      <div class="field-label">Milestone 3 — Name</div>
+      <input class="field-input" id="inp_m3n" placeholder="Real-time API">
+    </div>
+    <div class="field-group">
+      <div class="field-label">Milestone 4 — Name</div>
+      <input class="field-input" id="inp_m4n" placeholder="UK Nodes Live">
+    </div>
+
+    <div class="section-divider">UNM · Ultrasound Neuromodulation</div>
+    <div class="field-row">
+      <div class="field-group">
+        <div class="field-label">Frequência (kHz)</div>
+        <input class="field-input" id="inp_unm_freq" placeholder="500">
+      </div>
+      <div class="field-group">
+        <div class="field-label">Intensidade (%)</div>
+        <input class="field-input" id="inp_unm_int" placeholder="30">
+      </div>
+    </div>
+    <div class="field-row">
+      <div class="field-group">
+        <div class="field-label">Duração (ms)</div>
+        <input class="field-input" id="inp_unm_dur" placeholder="2000">
+      </div>
+      <div class="field-group">
+        <div class="field-label">Região alvo</div>
+        <input class="field-input" id="inp_unm_region" placeholder="Prefrontal Cortex">
+      </div>
+    </div>
+
+    <div class="section-divider">Experiment Log Entry</div>
+    <div class="field-group">
+      <div class="field-label">Event Name</div>
+      <input class="field-input" id="inp_evname" placeholder="EEG Alpha Spike">
+    </div>
+    <div class="field-row">
+      <div class="field-group">
+        <div class="field-label">Value / Note</div>
+        <input class="field-input" id="inp_evval" placeholder="+42µV">
+      </div>
+      <div class="field-group">
+        <div class="field-label">Time</div>
+        <input class="field-input" id="inp_evtime" placeholder="09:12 AM">
+      </div>
+    </div>
+
+    <button class="btn-save" onclick="saveData()">▶ SAVE & APPLY DATA</button>
+  </div>
+</div>
+
+<div class="saved-flash" id="savedFlash">✓ Data saved successfully</div>
+
+<div id="app">
+  <div class="sb">
+    <div class="logo">AG<br>999</div>
+    <div class="nb act" data-pg="dash" title="Dashboard">⬡</div>
+    <div class="nb" data-pg="eeg" title="EEG/MEG">〰</div>
+    <div class="nb" data-pg="res" title="Research">🔬</div>
+    <div class="nb" data-pg="uk" title="UK Nodes">📡</div>
+    <div class="nb" data-pg="aria" title="ARIA">🏆</div>
+    <div class="nb" data-pg="unm" title="UNM · Ultrassom" style="font-size:12px;color:rgba(0,238,255,0.5);">🔊</div>
+    <div class="sb-bot">
+      <div class="nb" title="Data Entry" onclick="openModal()" style="font-size:12px;">✦</div>
+      <div class="nb" data-pg="aria" title="IP Shield" onclick="showIP()" style="font-size:13px;">🛡</div>
+    </div>
+  </div>
+
+  <div class="main">
+    <div class="hdr">
+      <div class="hdr-ttl">
+        <h2><span class="sdot"></span>AG-999 Neural Interface</h2>
+        <p>AG-999 Neural Interface · ARIA Challenge · D/M* = 0.72 ATTENUATING</p>
+      </div>
+      <span class="sci-pill">Physics-Informed Neural Engine</span>
+      <div class="hdr-right">
+        <div class="hbtn" title="Enter Data" onclick="openModal()">✦</div>
+        <div class="hbtn">🔔</div>
+        <div class="hbtn" id="refBtn">⟳</div>
+      </div>
+    </div>
+
+    <div class="tabs">
+      <div class="tab act" data-tab="dash">Dashboard</div>
+      <div class="tab" data-tab="eeg">EEG / fNIRS / MEG</div>
+      <div class="tab" data-tab="res">Research Mode</div>
+      <div class="tab" data-tab="uk">UK Nodes</div>
+      <div class="tab" data-tab="aria">ARIA Challenge</div>
+      <div class="tab" data-tab="unm" style="color:rgba(0,238,255,0.5);">🔊 UNM · Ultrassom</div>
+    </div>
+
+    
+<!-- IP BANNER -->
+<div class="ip-banner">
+  <div>🔒 &nbsp; © 2026 César Agliardi Pereira · Gravataí, RS, Brasil · Propriedade Intelectual Exclusiva &nbsp;·&nbsp; SHA-256: 6E2E95D8B77BB511C9B4CE1F1C44BAD90CEE0D04FF00DEE8243F9543F29F4D26</div>
+  <div class="ip-chips">
+    <span class="ip-chip">AG-999 ENGINE</span>
+    <span class="ip-chip">Lei 9.610/98</span>
+    <span class="ip-chip">NOINDEX</span>
+    <span class="ip-chip">SHA-256 ✓</span>
+  </div>
+</div>
+<div class="body">
+      <div class="cnt">
+
+        <!-- DASHBOARD -->
+        <div class="pg act" id="pg-dash">
+          <div class="banner">
+            <h3>PHYSICS-INFORMED PREDICTIVE INFRASTRUCTURE FOR NON-SURGICAL NEURAL INTERFACES</h3>
+            <p>AG-999 applies quantum-inspired operators to decode non-invasive neural signals (EEG/fNIRS/MEG), modelling brain state transitions using O(□) = exp(−□/M*²) — enabling scalable BCI without surgery.</p>
+            <div class="btags">
+              <span class="btag">Non-Surgical BCI</span>
+              <span class="btag">AG-999 Operator</span>
+              <span class="btag c">EEG · fNIRS · MEG</span>
+              <span class="btag y">UK Deployment</span>
+              <span class="btag">ARIA Phase 1</span>
+            </div>
+          </div>
+          <div class="cards">
+            <div class="card"><div class="clbl">Signal · EEG</div><div class="ctyp">Neural Anomaly Index</div><div class="cval" id="v1">0.72</div><div class="csub">Alpha · 64ch · PhysioNet calibration Ph.1</div><span class="bdg bg">● ATTENUATING</span></div>
+            <div class="card"><div class="clbl">Signal · fNIRS</div><div class="ctyp">HbO Stress Index</div><div class="cval" id="v2">+0.84</div><div class="csub">Prefrontal · 24 opt</div><span class="bdg by">▲ ELEVATED</span></div>
+            <div class="card"><div class="clbl">Signal · MEG</div><div class="ctyp">Cascade Probability</div><div class="cval" id="v3">1.10</div><div class="csub">Gamma 62–80Hz · 312fT</div><span class="bdg br">⚠ SUPPRESSING</span></div>
+          </div>
+          <div class="row2">
+            <div class="gp">
+              <div class="ph"><span class="pt">Neural Events Log</span><button class="btn-data" onclick="openModal()">+ Add Entry</button></div>
+              <div class="elist" id="eventsList">
+                <div class="ei"><div class="eico eg">〰</div><div style="flex:1"><div class="en">EEG Alpha Spike</div><div class="et">09:12 AM</div></div><div class="ev">+42µV</div></div>
+                <div class="ei"><div class="eico ec">◎</div><div style="flex:1"><div class="en">fNIRS HbO Rise</div><div class="et">09:08 AM</div></div><div class="ev">+0.84mM</div></div>
+                <div class="ei"><div class="eico ey">⊛</div><div style="flex:1"><div class="en">MEG Gamma Burst</div><div class="et">08:55 AM</div></div><div class="ev">62Hz</div></div>
+                <div class="ei"><div class="eico er">⬡</div><div style="flex:1"><div class="en">AG-999 Crisis Signal</div><div class="et">08:40 AM</div></div><div class="ev" style="color:#ff4466">D/M*=1.1</div></div>
+              </div>
+            </div>
+            <div class="gp">
+              <div class="ph"><span class="pt">AG-999 EEG Live Stream</span><span class="live-chip">LIVE</span></div>
+              <canvas id="eegC" height="80"></canvas>
+              <div class="mgrid" style="margin-top:9px;">
+                <div class="mi"><div class="mico">〰</div><div class="mlbl">EEG</div></div>
+                <div class="mi"><div class="mico">◎</div><div class="mlbl">fNIRS</div></div>
+                <div class="mi"><div class="mico">⊛</div><div class="mlbl">MEG</div></div>
+                <div class="mi"><div class="mico">⬡</div><div class="mlbl">AG-999</div></div>
+              </div>
+            </div>
+          </div>
+          <div class="gp">
+            <div class="ph"><span class="pt">AG-999 Regressor · Monthly</span><span class="see">See all →</span></div>
+            <canvas id="regC" height="70"></canvas>
+          </div>
+        </div>
+
+        <!-- EEG PAGE -->
+        <div class="pg" id="pg-eeg">
+          <div class="banner">
+            <h3>MULTI-MODAL NEURAL SIGNAL ACQUISITION · EEG · fNIRS · MEG</h3>
+            <p>Real-time stream with AG-999 operator applied. Non-surgical. Non-invasive. Validated against PhysioNet datasets.</p>
+            <div class="btags"><span class="btag">64-ch EEG</span><span class="btag c">24-opt fNIRS</span><span class="btag y">306-sensor MEG</span></div>
+          </div>
+          <div class="gp">
+            <div class="ph"><span class="pt">Multi-Modal Neural Stream — Live</span><span class="live-chip">LIVE</span></div>
+            <canvas id="multiC" height="90"></canvas>
+          </div>
+          <div class="row3">
+            <div class="gp"><div class="ph"><span class="pt">Tipping Point Likelihood · fNIRS</span></div><canvas id="tipC" height="80"></canvas></div>
+            <div class="gp"><div class="ph"><span class="pt">Systemic Cascade Probability · MEG</span></div><canvas id="casC" height="80"></canvas></div>
+          </div>
+        </div>
+
+        <!-- RESEARCH PAGE -->
+        <div class="pg" id="pg-res">
+          <div class="banner">
+            <h3>RESEARCH MODE · EXPERIMENTS & HYPOTHESES</h3>
+            <p>Each module tests a falsifiable hypothesis about non-surgical neural interface performance. ARIA Phase 1 validation framework.</p>
+            <div class="btags"><span class="btag">Falsifiable Hypotheses</span><span class="btag c">Model Runs</span><span class="btag y">Simulations</span></div>
+          </div>
+          <div class="gp">
+            <div class="ph"><span class="pt">Active Hypotheses</span><span class="see">New +</span></div>
+            <div class="hyp"><div class="hh"><span class="hid">H-001</span><span class="hst hsa">ACTIVE</span></div><div class="htxt">The AG-999 operator O(□) achieves ≥30% noise reduction in EEG alpha-band signals vs standard bandpass filters, without invasive electrodes.</div><div class="hmt">EEG · Alpha · 64ch · Metric: SNR dB improvement</div></div>
+            <div class="hyp"><div class="hh"><span class="hid">H-002</span><span class="hst hsa">ACTIVE</span></div><div class="htxt">σ-field memory (24-month window) predicts sustained cognitive load in fNIRS HbO signals with ≥72% accuracy, enabling early fatigue detection without implants.</div><div class="hmt">fNIRS · HbO · Prefrontal · Metric: AUC-ROC ≥ 0.72</div></div>
+            <div class="hyp"><div class="hh"><span class="hid">H-003</span><span class="hst hsp">PENDING</span></div><div class="htxt">Qutrit state |Ψ⟩ with three neural modes (+1=active, 0=rest, −1=inhibited) models MEG gamma-burst cascades more accurately than binary HMM.</div><div class="hmt">MEG · Gamma · 306-sensors · Metric: BIC comparison</div></div>
+          </div>
+          <div class="gp">
+            <div class="ph"><span class="pt">Simulations & Model Runs</span></div>
+            <div class="sgrid">
+              <div class="si"><div class="stit">EEG Denoising Simulation</div><div class="sdsc">O(□) vs Butterworth filter on synthetic EEG. N=1000 runs, σ=5µV noise.</div><span class="sbd srun">▶ RUN SIMULATION</span></div>
+              <div class="si"><div class="stit">fNIRS Predictive Model</div><div class="sdsc">σ-field 24-month memory on HbO peaks. PhysioNet dataset. k-fold=10.</div><span class="sbd spro">◉ IN PROGRESS</span></div>
+              <div class="si"><div class="stit">Qutrit State Decoder</div><div class="sdsc">Map MEG to |+1⟩|0⟩|−1⟩ space. Compare vs 2-state HMM. EEGMMIDB dataset.</div><span class="sbd srun">▶ RUN SIMULATION</span></div>
+              <div class="si"><div class="stit">UK Scalability Test</div><div class="sdsc">AG-999 across 6 UK nodes simultaneously. Latency and throughput under load.</div><span class="sbd srun">▶ RUN SIMULATION</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- UK PAGE -->
+        <div class="pg" id="pg-uk">
+          <div class="banner">
+            <h3>UK DEPLOYMENT NODES · ARIA ELIGIBILITY · SCALABLE INFRASTRUCTURE</h3>
+            <p>AG-999 neural interface across 6 UK research nodes — UCL, NHS, York MEG, North Sea, Imperial, Edinburgh. ARIA Phase 1 & 2 rollout.</p>
+            <div class="btags"><span class="btag">6 UK Nodes</span><span class="btag c">NHS Connected</span><span class="btag y">North Sea Sensors</span><span class="btag">MoD Compatible</span></div>
+          </div>
+          <div class="cards">
+            <div class="card"><div class="clbl">Coverage</div><div class="ctyp">Active UK Nodes</div><div class="cval">4 / 6</div><div class="csub">2 in deployment</div><span class="bdg bg">● LIVE</span></div>
+            <div class="card"><div class="clbl">Volume</div><div class="ctyp">Neural Records/Day</div><div class="cval">18,400</div><div class="csub">EEG+fNIRS+MEG combined</div><span class="bdg bg">● ACTIVE</span></div>
+            <div class="card"><div class="clbl">Latency</div><div class="ctyp">Real-Time Processing</div><div class="cval">14 ms</div><div class="csub">AG-999 inference pipeline</div><span class="bdg by">▲ TARGET &lt;10ms</span></div>
+          </div>
+          <div class="gp">
+            <div class="ph"><span class="pt">UK Node Status</span><span class="see">Add Node +</span></div>
+            <div class="ukgrid">
+              <div class="un on"><div style="font-size:16px;margin-bottom:3px">🧠</div><div class="unn">UCL BCI Lab</div><div class="unl">London · N1 9LH</div><div class="unv">64-ch EEG</div><span class="unst uson">● ONLINE</span></div>
+              <div class="un on"><div style="font-size:16px;margin-bottom:3px">🏥</div><div class="unn">NHS Oxford</div><div class="unl">Oxford · OX3 9DU</div><div class="unv">fNIRS · 24opt</div><span class="unst uson">● ONLINE</span></div>
+              <div class="un on"><div style="font-size:16px;margin-bottom:3px">🌀</div><div class="unn">York MEG Centre</div><div class="unl">York · YO10 5DD</div><div class="unv">306-sensor MEG</div><span class="unst uson">● ONLINE</span></div>
+              <div class="un on"><div style="font-size:16px;margin-bottom:3px">📡</div><div class="unn">North Sea Node</div><div class="unl">Aberdeen · AB24</div><div class="unv">Remote EEG</div><span class="unst uson">● ONLINE</span></div>
+              <div class="un wn"><div style="font-size:16px;margin-bottom:3px">🔬</div><div class="unn">Imperial College</div><div class="unl">London · SW7 2AZ</div><div class="unv">EEG+fNIRS</div><span class="unst usw">▲ DEPLOYING</span></div>
+              <div class="un"><div style="font-size:16px;margin-bottom:3px">⬡</div><div class="unn">Edinburgh AI Lab</div><div class="unl">Edinburgh · EH8 9YL</div><div class="unv">AG-999 Core</div><span class="unst usof">○ PLANNED</span></div>
+            </div>
+          </div>
+          <div class="gp">
+            <div class="ph"><span class="pt">UK Neural Signal Density</span></div>
+            <canvas id="ukC" height="75"></canvas>
+          </div>
+        </div>
+
+        <!-- ARIA PAGE -->
+        <div class="pg" id="pg-aria">
+          <div class="banner">
+            <h3>ARIA CHALLENGE · SCALABLE NEUROTECHNOLOGIES · SUBMISSION TRACKER</h3>
+            <p>Deadline: 11 May 2026 · Prize: £200k–£500k · Status: IN PREPARATION</p>
+            <div class="btags"><span class="btag">Deadline: 11/05/2026</span><span class="btag c">ARIA Phase 1</span><span class="btag y">Non-Surgical</span><span class="btag">Individual Applicant</span></div>
+          </div>
+          
+          <!-- RECALIBRATION NOTICE -->
+          <div style="background:rgba(0,238,255,0.04);border:1px solid rgba(0,238,255,0.2);border-radius:9px;padding:11px 14px;display:flex;gap:12px;align-items:flex-start;">
+            <div style="font-size:18px;flex-shrink:0;">⚙</div>
+            <div>
+              <div style="font-size:.7rem;color:#00eeff;letter-spacing:.6px;margin-bottom:4px;">PHASE 1 · PARAMETER RECALIBRATION PLAN</div>
+              <div style="font-size:.65rem;color:rgba(180,255,220,0.6);line-height:1.6;">
+                Current AG-999 parameters (λ, m_gap, M*) were originally calibrated against agricultural and infrastructure risk data (USDA/RMA 2019–2025). For ARIA Phase 1, all parameters will be <strong style="color:#00eeff">fully recalibrated against peer-reviewed neural datasets</strong>: PhysioNet EEG Motor Movement/Imagery, fNIRS-DS (functional near-infrared), and OpenMEG. Metrics: SNR improvement (dB), AUC-ROC ≥ 0.72, BIC vs binary HMM baseline. The mathematical operator structure O(□) remains unchanged — only the domain-specific calibration is updated.
+              </div>
+              <div style="display:flex;gap:6px;margin-top:7px;flex-wrap:wrap;">
+                <span style="background:rgba(0,238,255,0.08);border:1px solid rgba(0,238,255,0.2);border-radius:4px;padding:1px 8px;font-size:.55rem;color:#00eeff;">PhysioNet EEG</span>
+                <span style="background:rgba(0,238,255,0.08);border:1px solid rgba(0,238,255,0.2);border-radius:4px;padding:1px 8px;font-size:.55rem;color:#00eeff;">fNIRS-DS</span>
+                <span style="background:rgba(0,238,255,0.08);border:1px solid rgba(0,238,255,0.2);border-radius:4px;padding:1px 8px;font-size:.55rem;color:#00eeff;">OpenMEG</span>
+                <span style="background:rgba(0,255,136,0.08);border:1px solid rgba(0,255,136,0.2);border-radius:4px;padding:1px 8px;font-size:.55rem;color:#00ff88;">Operator O(□) unchanged ✓</span>
+                <span style="background:rgba(0,255,136,0.08);border:1px solid rgba(0,255,136,0.2);border-radius:4px;padding:1px 8px;font-size:.55rem;color:#00ff88;">ARIA Phase 1 deliverable</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="cgrid">
+            <div class="cr"><div class="cico">🧬</div><div class="ctit">Scientific Hypothesis</div><div class="cdsc">AG-999 qutrit operator recalibrated against PhysioNet/fNIRS-DS/OpenMEG — measurable SNR and AUC-ROC gains over HMM baseline.</div><div class="srow"><span class="sstars">★★★★☆</span><span class="spct">80%</span></div><div class="pb"><div class="pf" style="width:80%"></div></div></div>
+            <div class="cr"><div class="cico">📐</div><div class="ctit">Credible & Feasible</div><div class="cdsc">Functional dashboard, formula docs, UK node architecture, calibrated parameters ready.</div><div class="srow"><span class="sstars">★★★★☆</span><span class="spct">80%</span></div><div class="pb"><div class="pf" style="width:80%"></div></div></div>
+            <div class="cr"><div class="cico">📏</div><div class="ctit">Measurable Outcomes</div><div class="cdsc">EEG SNR in dB, fNIRS AUC-ROC ≥0.72, MEG state accuracy vs HMM baseline defined.</div><div class="srow"><span class="sstars">★★★★☆</span><span class="spct">75%</span></div><div class="pb"><div class="pf" style="width:75%"></div></div></div>
+            <div class="cr"><div class="cico">🌍</div><div class="ctit">UK Eligibility</div><div class="cdsc">6 UK deployment nodes: UCL, NHS Oxford, York MEG, North Sea, Imperial, Edinburgh.</div><div class="srow"><span class="sstars">★★★★★</span><span class="spct">90%</span></div><div class="pb"><div class="pf" style="width:90%"></div></div></div>
+            <div class="cr"><div class="cico">🔬</div><div class="ctit">Scientific Ambition</div><div class="cdsc">Quantum field operators applied to neuroscience — cross-domain approach ARIA explicitly welcomes.</div><div class="srow"><span class="sstars">★★★★★</span><span class="spct">95%</span></div><div class="pb"><div class="pf" style="width:95%"></div></div></div>
+            <div class="cr"><div class="cico">💰</div><div class="ctit">Budget Justification</div><div class="cdsc">6 UK nodes, sensor infra, compute, 18-month Phase 1. Visual platform justifies £200–500k.</div><div class="srow"><span class="sstars">★★★★☆</span><span class="spct">75%</span></div><div class="pb"><div class="pf" style="width:75%"></div></div></div>
+          </div>
+          <div class="gp">
+            <div class="ph"><span class="pt">Overall Submission Score</span></div>
+            <div class="rbar">
+              <div class="ri"><span class="rn">Ambition</span><div class="rt"><div class="rf" style="width:95%;background:#00ff88"></div></div><span class="rv" style="color:#00ff88">95%</span></div>
+              <div class="ri"><span class="rn">Credibility</span><div class="rt"><div class="rf" style="width:80%;background:#00eeff"></div></div><span class="rv" style="color:#00eeff">80%</span></div>
+              <div class="ri"><span class="rn">Sci. Clarity</span><div class="rt"><div class="rf" style="width:75%;background:#ffcc00"></div></div><span class="rv" style="color:#ffcc00">75%</span></div>
+              <div class="ri"><span class="rn">Overall Chance</span><div class="rt"><div class="rf" style="width:70%;background:#00ff88"></div></div><span class="rv" style="color:#00ff88">70%</span></div>
+            </div>
+          </div>
+        </div>
+
+
+        <!-- IP PROTECTION PANEL -->
+        <div class="gp" id="ip-panel" style="display:none;">
+          <div class="ph">
+            <span class="pt">AG-999 Engine — Mathematical Core</span>
+            <span class="prop-tag">🔒 PROPRIETARY IP</span>
+          </div>
+          <div class="ip-block">
+            <div class="ip-block-title">Formula 04A — Unified Master Formula</div>
+            <div class="ip-formula">|Ψ⟩ = cos(θ/2)|+1⟩ + e<sup>iφ</sup>sin(θ/2)|−1⟩</div>
+            <div class="ip-desc">Quantum state vector on the Bloch sphere encoding system health.</div>
+            <div class="ip-formula">O(D²) = exp[−λ(D² + m²)² / <span class="blur-val">M*⁴</span>]</div>
+            <div class="ip-desc">Suppression operator. Coefficients λ, m², M* proprietary — Phase 1 recalibration against PhysioNet EEG, fNIRS-DS, OpenMEG datasets.</div>
+            <div class="ip-formula">D² = I² + Y² + P² + C² + 2IY + 2YC + <span class="blur-val">β·z + γ·ϕ + δ·σ</span></div>
+            <div class="ip-desc">Anomaly tensor. Cross-terms and weighting coefficients are protected.</div>
+
+            <div class="ip-block-title" style="margin-top:10px;">Formula 06A — v11 Unified Output</div>
+            <div class="ip-formula">p<sub>t</sub> = σ(a·[exp(−<span class="blur-val">λ</span>D<sub>t</sub>²) − b])</div>
+            <div class="ip-desc">Final probability output via calibrated sigmoid. Parameters a, b, λ protected.</div>
+
+            <div class="ip-block-title" style="margin-top:10px;">Formula 07A — v14 Qutrit State</div>
+            <div class="ip-formula">|Ψ⟩ = cos(θ/2)|+1⟩ + e<sup>iϕ</sup>sin(θ/2)cosχ|0⟩ + e<sup>iα</sup>sin(θ/2)sinχ|−1⟩</div>
+            <div class="ip-desc">Three-state neural/system classification: active, rest, inhibited.</div>
+            <div class="ip-formula">𝒪(□) = exp(−□ / <span class="blur-val">M*²</span>)</div>
+            <div class="ip-desc">Non-local suppression operator. M* is a protected proprietary parameter.</div>
+
+            <div class="ip-footer">
+              🔒 All mathematical structures above constitute original intellectual property of César Agliardi Pereira (Gravataí, RS, Brasil), developed independently prior to this submission.<br>
+              SHA-256: 6E2E95D8B77BB511C9B4CE1F1C44BAD90CEE0D04FF00DEE8243F9543F29F4D26<br>
+              Protected under Lei 9.610/98 (Brazilian Copyright Law). Patent filing under consideration. All rights reserved. Redistribution prohibited.
+            </div>
+          </div>
+        </div>
+
+        <!-- UNM PAGE -->
+        <div class="pg" id="pg-unm">
+          <div class="banner">
+            <h3>AG-999 v2 · ULTRASOUND NEUROMODULATION MODULE (UNM)</h3>
+            <p>Neurosonic Architecture — closed-loop neuromodulation via focused low-intensity ultrasound. Transdutores direcionados a regiões específicas do cérebro. ARIA-compatible.</p>
+            <div class="btags">
+              <span class="btag c">Closed-Loop</span>
+              <span class="btag">Focused Ultrasound</span>
+              <span class="btag y">ARIA Phase 1</span>
+              <span class="btag">Non-Invasive</span>
+              <span class="btag c">UNM v1.0</span>
+            </div>
+          </div>
+
+          <!-- METRICS -->
+          <div class="unm-metrics-row">
+            <div class="unm-metric"><div class="unm-metric-lbl">Stress Level</div><div class="unm-metric-val" id="unm_stress_disp">0.72 <span class="unm-metric-unit">/ 1.0</span></div></div>
+            <div class="unm-metric"><div class="unm-metric-lbl">Frequência</div><div class="unm-metric-val" id="unm_freq_disp">500 <span class="unm-metric-unit">kHz</span></div></div>
+            <div class="unm-metric"><div class="unm-metric-lbl">Intensidade</div><div class="unm-metric-val" id="unm_int_disp">30 <span class="unm-metric-unit">%</span></div></div>
+            <div class="unm-metric"><div class="unm-metric-lbl">Duração</div><div class="unm-metric-val" id="unm_dur_disp">2000 <span class="unm-metric-unit">ms</span></div></div>
+          </div>
+
+          <!-- ARCHITECTURE LAYERS -->
+          <div class="unm-arch">
+            <div class="unm-layer">
+              <span class="unm-layer-badge badge-sense">LAYER 1 · SENSORIAMENTO</span>
+              <div class="unm-layer-title">Camada de Sensoriamento</div>
+              <ul class="unm-layer-items">
+                <li>EEG — 64 canais · PhysioNet calibrado</li>
+                <li>fNIRS — 24 optodos · HbO/HbR prefrontal</li>
+                <li>MEG — 306 sensores · Gamma 62–80 Hz</li>
+                <li>Função: captação de sinais neurais brutos</li>
+              </ul>
+            </div>
+            <div class="unm-layer layer-core">
+              <span class="unm-layer-badge badge-core">LAYER 2 · AG-999 ENGINE</span>
+              <div class="unm-layer-title">Neural Control Engine</div>
+              <ul class="unm-layer-items">
+                <li>Decodificação neural via O(□) operator</li>
+                <li>Detecção de padrões — qutrit state |Ψ⟩</li>
+                <li>Predição de estados cerebrais (σ-field)</li>
+                <li>Decisão de intervenção ultrassônica</li>
+              </ul>
+            </div>
+            <div class="unm-layer layer-new">
+              <span class="unm-layer-badge badge-action">LAYER 3 · AÇÃO (NOVO)</span>
+              <div class="unm-layer-title">Ultrasound Neuromodulation Module</div>
+              <ul class="unm-layer-items">
+                <li>Transdutores ultrassônicos focados</li>
+                <li>Frequência controlada — baixa intensidade</li>
+                <li>Direcionamento a regiões cerebrais específicas</li>
+                <li>Controlador de intensidade / frequência / duração</li>
+              </ul>
+            </div>
+            <div class="unm-layer">
+              <span class="unm-layer-badge badge-loop">LAYER 4 · CLOSED-LOOP</span>
+              <div class="unm-layer-title">Loop Fechado (Closed-Loop)</div>
+              <ul class="unm-layer-items">
+                <li>cérebro → sinais EEG/fNIRS → app analisa</li>
+                <li>app decide intervenção → ultrassom atua</li>
+                <li>cérebro responde → app recalibra</li>
+                <li>Exatamente o que o ARIA requer ✓</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- CLOSED-LOOP ANIMATION -->
+          <div class="loop-flow">
+            <div class="ph"><span class="pt">Closed-Loop · Estado em Tempo Real</span><span class="live-chip">LIVE</span></div>
+            <div class="loop-steps-row" id="unm-loop-row">
+              <span class="loop-node" id="lsn0">🧠 Cérebro emite sinais</span>
+              <span class="loop-arr">→</span>
+              <span class="loop-node" id="lsn1">〰 EEG/fNIRS capturam</span>
+              <span class="loop-arr">→</span>
+              <span class="loop-node" id="lsn2">⬡ AG-999 analisa</span>
+              <span class="loop-arr">→</span>
+              <span class="loop-node" id="lsn3">💡 Decide intervenção</span>
+              <span class="loop-arr">→</span>
+              <span class="loop-node" id="lsn4">🔊 Ultrassom atua</span>
+              <span class="loop-arr">→</span>
+              <span class="loop-node" id="lsn5">🔁 App recalibra</span>
+            </div>
+          </div>
+
+          <!-- UNM CONTROLS -->
+          <div class="unm-controls">
+            <div class="ph"><span class="pt">UNM · Controles do Transdutor</span><span class="prop-tag" style="font-size:.52rem;">🔊 HARDWARE INTERFACE</span></div>
+            <div class="unm-sliders">
+              <div class="unm-sl">
+                <label class="unm-sl-label">Frequência <span class="unm-sl-val" id="unm_f_lbl">500 kHz</span></label>
+                <input type="range" min="100" max="1000" value="500" step="10" id="unm_freq">
+              </div>
+              <div class="unm-sl">
+                <label class="unm-sl-label">Intensidade <span class="unm-sl-val" id="unm_i_lbl">30 %</span></label>
+                <input type="range" min="0" max="100" value="30" step="1" id="unm_int">
+              </div>
+              <div class="unm-sl">
+                <label class="unm-sl-label">Duração <span class="unm-sl-val" id="unm_d_lbl">2000 ms</span></label>
+                <input type="range" min="500" max="5000" value="2000" step="100" id="unm_dur">
+              </div>
+              <div class="unm-sl">
+                <label class="unm-sl-label">Stress simulado <span class="unm-sl-val" id="unm_s_lbl">0.72</span></label>
+                <input type="range" min="0" max="100" value="72" step="1" id="unm_stress">
+              </div>
+            </div>
+            <div id="unm-alerts" style="margin-top:8px;display:flex;flex-direction:column;gap:4px;"></div>
+            <button class="unm-emergency" id="unm-stop-btn">⬛ PARAR ESTIMULAÇÃO — EMERGENCY STOP</button>
+          </div>
+
+          <!-- ARIA NOTE -->
+          <div style="background:rgba(0,238,255,0.04);border:1px solid rgba(0,238,255,0.18);border-radius:9px;padding:11px 14px;">
+            <div style="font-size:.68rem;color:#00eeff;letter-spacing:.6px;margin-bottom:5px;">ARIA · POSICIONAMENTO ESTRATÉGICO DO UNM</div>
+            <div style="font-size:.62rem;color:rgba(180,255,220,0.6);line-height:1.65;">
+              <strong style="color:#00eeff;">Secção recomendada:</strong> "Ultrasound-based neuromodulation combined with scalable neural interface strategies." O AG-999 funciona como o <em>Neural Control Engine</em> inteligente que decide quando e como o ultrassom intervém — posicionando este sistema como uma <strong style="color:#00ff88;">plataforma de neuromodulação inteligente em loop fechado</strong>, não apenas um app de análise. Isso eleva o nível do projeto de análise para intervenção real — exatamente o diferencial que o ARIA valoriza.
+            </div>
+            <div style="display:flex;gap:6px;margin-top:7px;flex-wrap:wrap;">
+              <span style="background:rgba(0,255,136,0.08);border:1px solid rgba(0,255,136,0.2);border-radius:4px;padding:1px 8px;font-size:.55rem;color:#00ff88;">ultrassom = modulação</span>
+              <span style="background:rgba(255,204,0,0.08);border:1px solid rgba(255,204,0,0.2);border-radius:4px;padding:1px 8px;font-size:.55rem;color:#ffcc00;">AG-999 = inteligência</span>
+              <span style="background:rgba(0,238,255,0.08);border:1px solid rgba(0,238,255,0.2);border-radius:4px;padding:1px 8px;font-size:.55rem;color:#00eeff;">closed-loop = diferencial ARIA</span>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- end cnt -->
+
+      <!-- RIGHT PANEL -->
+      <div class="rpanel">
+        <div>
+          <div class="rpt">AG-999 Parameters</div>
+          <div class="rrow rrow-edit" onclick="openModal()"><span class="rl">m_gap</span><span class="rv2" id="rp_mgap" title="To be recalibrated against neural datasets">⟳ Ph.1</span></div>
+          <div class="rrow"><span class="rl">M*</span><span class="rv2" id="rp_mstar">10¹⁶ GeV</span></div>
+          <div class="rrow"><span class="rl">λ</span><span class="rv2" id="rp_lambda" title="To be recalibrated against neural datasets">⟳ Ph.1</span></div>
+          <div class="rrow"><span class="rl">σ-window</span><span class="rv2" id="rp_sigma">24 months</span></div>
+          <div class="rrow"><span class="rl">φ-window</span><span class="rv2" id="rp_phi">6 months</span></div>
+        </div>
+        <div>
+          <div class="rpt">Neural Biomarkers</div>
+          <div class="rrow"><span class="rl">HbO Peak</span><span class="rv2" id="rp_hbo">+0.84 mM</span></div>
+          <div class="rrow"><span class="rl">HbR</span><span class="rv2" id="rp_hbr">−0.21 mM</span></div>
+          <div class="rrow"><span class="rl">MEG Peak</span><span class="rv2" id="rp_meg">312 fT</span></div>
+          <div class="rrow"><span class="rl">EEG SNR</span><span class="rv2" id="rp_snr">18.4 dB</span></div>
+        </div>
+        <div>
+          <div class="rpt">ARIA Milestones</div>
+          <div class="goal"><span class="gn" id="rp_m1n">EEG Validation</span><span class="gv" id="rp_m1p">Ph.1</span><span class="ga">+</span></div>
+          <div class="goal"><span class="gn" id="rp_m2n">fNIRS Integration</span><span class="gv">Ph.1</span><span class="ga">+</span></div>
+          <div class="goal"><span class="gn" id="rp_m3n">Real-time API</span><span class="gv">Ph.2</span><span class="ga">+</span></div>
+          <div class="goal"><span class="gn" id="rp_m4n">UK Nodes Live</span><span class="gv">Ph.2</span><span class="ga">+</span></div>
+        </div>
+        <div>
+          <div class="rpt" style="color:#00eeff;">UNM · Ultrassom</div>
+          <div class="rrow"><span class="rl">Freq.</span><span class="rv2" id="rp_unm_freq" style="color:#00eeff;">500 kHz</span></div>
+          <div class="rrow"><span class="rl">Intens.</span><span class="rv2" id="rp_unm_int" style="color:#00eeff;">30 %</span></div>
+          <div class="rrow"><span class="rl">Duração</span><span class="rv2" id="rp_unm_dur" style="color:#00eeff;">2000 ms</span></div>
+          <div class="rrow"><span class="rl">Região</span><span class="rv2" id="rp_unm_region" style="color:#00eeff;font-size:.55rem;">Prefrontal</span></div>
+          <div class="rrow"><span class="rl">Loop</span><span class="rv2" id="rp_unm_loop" style="color:#00ff88;">ACTIVE ●</span></div>
+        </div>
+        <div style="margin-top:auto;">
+          <button class="btn-data" onclick="openModal()" style="width:100%;text-align:center;padding:5px;">✦ Edit Data</button>
+          <div style="font-size:.5rem;color:rgba(180,255,220,0.25);line-height:1.6;margin-top:8px;">AG-999 · SHA-256: 6E2E95D<br>Lei 9.610/98</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── STORAGE KEY ──
+const STORE_KEY = 'ag999_data_v1';
+
+// ── DEFAULTS ──
+const defaults = {
+  mgap:'⟳ Ph.1 (neural)', mstar:'10¹⁶ GeV', lambda:'⟳ Ph.1 (neural)', sigma:'24 months', phi:'6 months',
+  hbo:'+0.84 mM', hbr:'−0.21 mM', meg:'312 fT', snr:'18.4 dB',
+  v1:'0.72', v2:'+0.84', v3:'1.10',
+  m1n:'EEG Validation', m1p:'Ph.1', m2n:'fNIRS Integration', m3n:'Real-time API', m4n:'UK Nodes Live',
+  events:[
+    {icon:'eg',sym:'〰',name:'EEG Alpha Spike',time:'09:12 AM',val:'+42µV'},
+    {icon:'ec',sym:'◎',name:'fNIRS HbO Rise',time:'09:08 AM',val:'+0.84mM'},
+    {icon:'ey',sym:'⊛',name:'MEG Gamma Burst',time:'08:55 AM',val:'62Hz'},
+    {icon:'er',sym:'⬡',name:'AG-999 Crisis Signal',time:'08:40 AM',val:'D/M*=1.1',red:true}
+  ]
+};
+
+function loadData(){
+  try{
+    const raw = localStorage.getItem(STORE_KEY);
+    return raw ? {...defaults, ...JSON.parse(raw)} : {...defaults};
+  } catch(e){ return {...defaults}; }
+}
+
+function saveData(){
+  const d = loadData();
+  const fields = ['mgap','mstar','lambda','sigma','phi','hbo','hbr','meg','snr','v1','v2','v3','m1n','m1p','m2n','m3n','m4n'];
+  const inputMap = {mgap:'inp_mgap',mstar:'inp_mstar',lambda:'inp_lambda',sigma:'inp_sigma',phi:'inp_phi',
+    hbo:'inp_hbo',hbr:'inp_hbr',meg:'inp_meg',snr:'inp_snr',
+    v1:'inp_v1',v2:'inp_v2',v3:'inp_v3',
+    m1n:'inp_m1n',m1p:'inp_m1p',m2n:'inp_m2n',m3n:'inp_m3n',m4n:'inp_m4n'};
+  
+  // collect from inputs
+  const updated = {};
+  fields.forEach(f => {
+    const el = document.getElementById(inputMap[f]);
+    if(el && el.value.trim()) updated[f] = el.value.trim();
+  });
+
+  // check new event
+  const evname = document.getElementById('inp_evname').value.trim();
+  const evval  = document.getElementById('inp_evval').value.trim();
+  const evtime = document.getElementById('inp_evtime').value.trim();
+  if(evname){
+    const newEv = {icon:'eg',sym:'〰',name:evname,time:evtime||'--:--',val:evval||'--'};
+    updated.events = [newEv, ...(d.events||[])].slice(0,8);
+    document.getElementById('inp_evname').value='';
+    document.getElementById('inp_evval').value='';
+    document.getElementById('inp_evtime').value='';
+  }
+
+  const merged = {...d, ...updated};
+  localStorage.setItem(STORE_KEY, JSON.stringify(merged));
+  applyData(merged);
+  closeModal();
+  showFlash();
+}
+
+function applyData(d){
+  // right panel parameters
+  const rpMap = {rp_mgap:'mgap',rp_mstar:'mstar',rp_lambda:'lambda',rp_sigma:'sigma',rp_phi:'phi',
+    rp_hbo:'hbo',rp_hbr:'hbr',rp_meg:'meg',rp_snr:'snr',
+    rp_m1n:'m1n',rp_m1p:'m1p',rp_m2n:'m2n',rp_m3n:'m3n',rp_m4n:'m4n'};
+  Object.entries(rpMap).forEach(([elId,key])=>{
+    const el=document.getElementById(elId);
+    if(el && d[key]) el.textContent=d[key];
+  });
+  // signal cards (only override if not animating)
+  if(!window._liveMode){
+    ['v1','v2','v3'].forEach(k=>{
+      const el=document.getElementById(k);
+      if(el && d[k]) el.textContent=d[k];
+    });
+  }
+  // events log
+  if(d.events && d.events.length){
+    const list=document.getElementById('eventsList');
+    list.innerHTML=d.events.map(ev=>`
+      <div class="ei">
+        <div class="eico ${ev.icon}">${ev.sym}</div>
+        <div style="flex:1"><div class="en">${ev.name}</div><div class="et">${ev.time}</div></div>
+        <div class="ev" ${ev.red?'style="color:#ff4466"':''}>${ev.val}</div>
+      </div>`).join('');
+  }
+  // populate modal inputs with current values
+  const inpMap = {inp_mgap:'mgap',inp_mstar:'mstar',inp_lambda:'lambda',inp_sigma:'sigma',inp_phi:'phi',
+    inp_hbo:'hbo',inp_hbr:'hbr',inp_meg:'meg',inp_snr:'snr',
+    inp_v1:'v1',inp_v2:'v2',inp_v3:'v3',
+    inp_m1n:'m1n',inp_m1p:'m1p',inp_m2n:'m2n',inp_m3n:'m3n',inp_m4n:'m4n'};
+  Object.entries(inpMap).forEach(([elId,key])=>{
+    const el=document.getElementById(elId);
+    if(el && d[key]) el.placeholder=d[key];
+  });
+}
+
+function openModal(){
+  document.getElementById('dataModal').classList.add('open');
+}
+function closeModal(){
+  document.getElementById('dataModal').classList.remove('open');
+}
+document.getElementById('dataModal').addEventListener('click',function(e){
+  if(e.target===this) closeModal();
+});
+
+function showFlash(){
+  const f=document.getElementById('savedFlash');
+  f.classList.add('show');
+  setTimeout(()=>f.classList.remove('show'),2500);
+}
+
+// ── CHARTS ──
+const charts={};
+function wave(n,f,a,o=0){return Array.from({length:n},(_,i)=>+(Math.sin((i+o)*f)*a+((Math.random()-.5)*a*.3)).toFixed(2));}
+const mo=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const cOpts={responsive:true,animation:{duration:0},plugins:{legend:{display:false}},scales:{x:{display:false},y:{display:false}}};
+const cOpts2=(min,max)=>({responsive:true,plugins:{legend:{display:false}},scales:{x:{ticks:{color:'rgba(180,255,220,0.35)',font:{size:7}},grid:{color:'rgba(0,255,136,0.05)'}},y:{min,max,ticks:{color:'rgba(180,255,220,0.35)',font:{size:7}},grid:{color:'rgba(0,255,136,0.05)'}}}});
+
+function mk(id,type,data,opts){
+  const el=document.getElementById(id);
+  if(!el)return null;
+  if(charts[id]){charts[id].destroy();}
+  charts[id]=new Chart(el.getContext('2d'),{type,data,options:opts});
+  return charts[id];
+}
+
+let off=0,eegRef=null;
+window._liveMode=true;
+function initDash(){
+  eegRef=mk('eegC','line',{labels:Array.from({length:30},(_,i)=>i),datasets:[
+    {data:wave(30,.6,12),borderColor:'#00ff88',borderWidth:1.5,tension:.4,pointRadius:0,fill:false},
+    {data:wave(30,1.2,6,5),borderColor:'#00eeff',borderWidth:1.5,tension:.4,pointRadius:0,fill:false},
+    {data:wave(30,2.5,3,2),borderColor:'#ffcc00',borderWidth:1,tension:.4,pointRadius:0,fill:false}
+  ]},cOpts);
+  mk('regC','line',{labels:mo,datasets:[{data:[.2,.35,.5,.72,.88,1.1,.95,.8,.65,.72,.6,.45],borderColor:'#00ff88',backgroundColor:'rgba(0,255,136,0.07)',borderWidth:2,tension:.4,pointRadius:3,pointBackgroundColor:'#00ff88',fill:true}]},cOpts2(0,1.4));
+}
+function initEEG(){
+  mk('multiC','line',{labels:Array.from({length:30},(_,i)=>i+'s'),datasets:[
+    {label:'EEG',data:wave(30,.6,12),borderColor:'#00ff88',borderWidth:1.5,tension:.4,pointRadius:0,fill:false},
+    {label:'fNIRS',data:wave(30,.3,8,4),borderColor:'#00eeff',borderWidth:1.5,tension:.4,pointRadius:0,fill:false},
+    {label:'MEG',data:wave(30,2.2,5,2),borderColor:'#ffcc00',borderWidth:1,tension:.4,pointRadius:0,fill:false}
+  ]},{responsive:true,animation:{duration:0},plugins:{legend:{labels:{color:'rgba(180,255,220,0.5)',font:{size:8}}}},scales:{x:{ticks:{color:'rgba(180,255,220,0.3)',font:{size:7}},grid:{color:'rgba(0,255,136,0.04)'}},y:{ticks:{color:'rgba(180,255,220,0.3)',font:{size:7}},grid:{color:'rgba(0,255,136,0.04)'}}}});
+  mk('tipC','line',{labels:mo,datasets:[{data:[.1,.15,.22,.38,.52,.71,.68,.55,.48,.61,.57,.44],borderColor:'#00eeff',backgroundColor:'rgba(0,238,255,0.06)',borderWidth:2,tension:.4,pointRadius:2,pointBackgroundColor:'#00eeff',fill:true}]},cOpts2(0,1));
+  mk('casC','line',{labels:mo,datasets:[{data:[.05,.1,.18,.35,.6,.85,.78,.62,.5,.65,.55,.4],borderColor:'#ff4466',backgroundColor:'rgba(255,68,102,0.06)',borderWidth:2,tension:.4,pointRadius:2,pointBackgroundColor:'#ff4466',fill:true}]},cOpts2(0,1));
+}
+function initUK(){
+  mk('ukC','bar',{labels:['UCL BCI','NHS Oxford','York MEG','N.Sea','Imperial','Edinburgh'],datasets:[
+    {label:'EEG',data:[4200,3800,2900,3100,1200,0],backgroundColor:'rgba(0,255,136,0.2)',borderColor:'#00ff88',borderWidth:1},
+    {label:'fNIRS',data:[1800,2200,800,400,600,0],backgroundColor:'rgba(0,238,255,0.12)',borderColor:'#00eeff',borderWidth:1}
+  ]},{responsive:true,plugins:{legend:{labels:{color:'rgba(180,255,220,0.5)',font:{size:8}}}},scales:{x:{ticks:{color:'rgba(180,255,220,0.3)',font:{size:7}},grid:{color:'rgba(0,255,136,0.04)'}},y:{ticks:{color:'rgba(180,255,220,0.3)',font:{size:7}},grid:{color:'rgba(0,255,136,0.04)'}}}});
+}
+
+function go(id){
+  document.querySelectorAll('.pg').forEach(p=>p.classList.remove('act'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('act'));
+  document.querySelectorAll('.nb').forEach(b=>b.classList.remove('act'));
+  const pg=document.getElementById('pg-'+id);
+  if(pg) pg.classList.add('act');
+  document.querySelectorAll('.tab[data-tab="'+id+'"]').forEach(t=>t.classList.add('act'));
+  document.querySelectorAll('.nb[data-pg="'+id+'"]').forEach(b=>b.classList.add('act'));
+  if(id==='dash') initDash();
+  else if(id==='eeg') initEEG();
+  else if(id==='uk') initUK();
+  else if(id==='unm'){ if(window._unmSyncInit) window._unmSyncInit(); }
+}
+
+document.querySelectorAll('.tab').forEach(t=>t.addEventListener('click',()=>go(t.dataset.tab)));
+document.querySelectorAll('.nb[data-pg]').forEach(b=>b.addEventListener('click',()=>go(b.dataset.pg)));
+document.getElementById('refBtn').addEventListener('click',function(){
+  this.style.transform='rotate(360deg)';this.style.transition='transform .4s';
+  setTimeout(()=>{this.style.transform='';},400);
+});
+
+// INIT
+const savedData = loadData();
+applyData(savedData);
+initDash();
+
+clearInterval(window._eegT);
+window._eegT=setInterval(()=>{
+  off++;
+  if(eegRef){
+    eegRef.data.datasets[0].data=wave(30,.6,12,off);
+    eegRef.data.datasets[1].data=wave(30,1.2,6,off+5);
+    eegRef.data.datasets[2].data=wave(30,2.5,3,off+2);
+    eegRef.update('none');
+  }
+},1800);
+
+// ── UNM MODULE ──
+(function(){
+  const loopColors=['ls-act','ls-act-c','ls-act-c','ls-act-y','ls-act-r','ls-act'];
+  let ls=0;
+  function animLoop(){
+    for(let i=0;i<6;i++){
+      const n=document.getElementById('lsn'+i);
+      if(!n) return;
+      n.className='loop-node'+(i===ls?' '+loopColors[i]:'');
+    }
+    ls=(ls+1)%6;
+  }
+  setInterval(animLoop,1100);
+
+  function unmAlerts(stress,intensity){
+    const el=document.getElementById('unm-alerts');
+    if(!el) return;
+    el.innerHTML='';
+    const add=(cls,msg)=>{const d=document.createElement('div');d.className='unm-alert '+cls;d.textContent=msg;el.appendChild(d);};
+    if(stress>0.8){add('unm-alert-warn','⚠ Stress elevado — intervenção ultrassônica ativada');
+    }else if(stress>0.5){add('unm-alert-blue','◉ Estimulação ativa — intensidade dentro do limite seguro');
+    }else{add('unm-alert-ok','✓ Estado neural estável — sem intervenção necessária');}
+    if(intensity>80){add('unm-alert-warn','⚠ Atenção: intensidade próxima do limite de segurança');}
+    else{add('unm-alert-ok','✓ Sinal neural estável — recalibração concluída');}
+  }
+
+  function syncUnm(){
+    const f=document.getElementById('unm_freq');
+    const i=document.getElementById('unm_int');
+    const d=document.getElementById('unm_dur');
+    const s=document.getElementById('unm_stress');
+    if(!f) return;
+    const fv=f.value, iv=i.value, dv=d.value, sv=(s.value/100).toFixed(2);
+    document.getElementById('unm_f_lbl').textContent=fv+' kHz';
+    document.getElementById('unm_i_lbl').textContent=iv+' %';
+    document.getElementById('unm_d_lbl').textContent=dv+' ms';
+    document.getElementById('unm_s_lbl').textContent=sv;
+    document.getElementById('unm_freq_disp').innerHTML=fv+' <span class="unm-metric-unit">kHz</span>';
+    document.getElementById('unm_int_disp').innerHTML=iv+' <span class="unm-metric-unit">%</span>';
+    document.getElementById('unm_dur_disp').innerHTML=dv+' <span class="unm-metric-unit">ms</span>';
+    document.getElementById('unm_stress_disp').innerHTML=sv+' <span class="unm-metric-unit">/ 1.0</span>';
+    document.getElementById('rp_unm_freq').textContent=fv+' kHz';
+    document.getElementById('rp_unm_int').textContent=iv+' %';
+    document.getElementById('rp_unm_dur').textContent=dv+' ms';
+    unmAlerts(parseFloat(sv),parseInt(iv));
+  }
+
+  window._unmSyncInit=function(){
+    ['unm_freq','unm_int','unm_dur','unm_stress'].forEach(id=>{
+      const el=document.getElementById(id);
+      if(el) el.addEventListener('input',syncUnm);
+    });
+    unmAlerts(0.72,30);
+    const stopBtn=document.getElementById('unm-stop-btn');
+    if(stopBtn) stopBtn.addEventListener('click',function(){
+      ['unm_freq','unm_int','unm_dur'].forEach(id=>{const el=document.getElementById(id);if(el){el.value=0;}});
+      syncUnm();
+      const el=document.getElementById('unm-alerts');
+      if(el){el.innerHTML='<div class="unm-alert unm-alert-warn">⬛ ESTIMULAÇÃO INTERROMPIDA — sistema em modo seguro</div>';}
+      document.getElementById('rp_unm_loop').textContent='STOPPED ■';
+      document.getElementById('rp_unm_loop').style.color='#ff4466';
+      this.textContent='▶ REINICIAR SISTEMA';
+      this.style.background='rgba(0,255,136,0.08)';
+      this.style.color='#00ff88';
+      this.style.borderColor='rgba(0,255,136,0.3)';
+      this.onclick=()=>location.reload();
+    });
+  };
+  window._unmSyncInit();
+  setInterval(animLoop,1100);
+})();
+
+// SHOW IP PANEL
+function showIP(){
+  go('aria');
+  const p = document.getElementById('ip-panel');
+  if(p){ p.style.display='block'; p.scrollIntoView({behavior:'smooth',block:'start'}); }
+}
+</script>
